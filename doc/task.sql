@@ -1,0 +1,11 @@
+INSERT INTO `task` VALUES (34, '12', 'f50e3c20-5eaf-11ea-b7b1-b3f6fb876f1f', '3', '2', '2020-3-5 15:07:25');
+INSERT INTO `task` VALUES (35, '13', 'f9885290-5eaf-11ea-b7b1-b3f6fb876f1f', '3', '4', '2020-3-5 15:07:38');
+INSERT INTO `task` VALUES (36, '13', 'c0c12f10-5ebc-11ea-98f5-dda7588c52fe', '3', '3', '2020-3-5 16:39:06');
+INSERT INTO `task` VALUES (38, '13', 'e9599740-5ed1-11ea-ad47-65b07f48aed5', '3', '3', '2020-3-5 19:10:31');
+INSERT INTO `task` VALUES (39, '13', '966c6250-5ed2-11ea-a507-43891acff900', '3', '4', '2020-3-5 19:15:21');
+INSERT INTO `task` VALUES (40, '13', '62fadea0-5ed3-11ea-9ecc-7d37c1dfb38a', '3', '3', '2020-3-5 19:21:03');
+INSERT INTO `task` VALUES (43, '13', '9fc47fb0-5f57-11ea-8cda-816669267034', '2', '3', '2020-3-6 11:07:39');
+INSERT INTO `task` VALUES (44, '', '38aeec10-5f58-11ea-a85d-0f5ceb8f7b5c', '1', '4', '2020-3-6 11:13:00');
+INSERT INTO `task` VALUES (45, NULL, 'bba2a060-61df-11ea-9bde-1bfeacd09865', '0', '1', '2020-3-9 16:29:59');
+INSERT INTO `task` VALUES (46, NULL, '98036050-61e3-11ea-896b-c14a8c892229', '0', '5', '2020-3-9 17:03:07');
+INSERT INTO `task` VALUES (47, '', 'fed35810-61e5-11ea-896b-c14a8c892229', '1', '6', '2020-3-9 17:12:32');
