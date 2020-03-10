@@ -54,7 +54,7 @@
                     <div  v-if="parseInt(item.status) === 3" style="margin-top: 10px;font-size:13px">
                       已经完成
                     </div>
-                    <div v-else style="margin-top: 10px">未完成</div>
+                    <div v-else style="margin-top: 10px; font-size:13px;">未完成</div>
                     <div style="margin-top: 50px">
                       <el-button size="mini" slot="tip" class="el-upload__tip" @click="download(item.folder_name)">下载
                       </el-button>
