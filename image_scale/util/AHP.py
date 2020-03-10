@@ -29,8 +29,9 @@ class AHP():
         max_eval = max(list(eval))
         index = list(eval).index(max_eval)
         cor_evec = evec[:, index]
+        cor_evec_mod = [abs(a) for a in cor_evec]
 
-        return cor_evec
+        return cor_evec_mod
 
     #Save data to exel file
     def save_result(self, data, folder):
@@ -65,7 +66,5 @@ if __name__ == '__main__':
     obj = AHP(M)
     evec = obj.get_evec(obj.supp_mat(M))
     obj.save_result(evec)
-
-
 
 

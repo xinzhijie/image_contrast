@@ -48,17 +48,20 @@
                 </el-col>
                 <el-col :span="10">
                   <div style="margin-top: 10px" v-if="parseInt(item.status) > 1">
-                    <span v-for="u in tableList[index].users">
-                      <span v-if="u.id === item.user_id">指定人:{{u.username}}</span>
+                    <span style="font-size:13px" v-for="u in tableList[index].users">
+                      <span v-if="u.id === item.user_id">指定用户:{{u.username}}</span>
                     </span>
-                    <div v-if="parseInt(item.status) === 3" style="margin-top: 10px">
+                    <div  v-if="parseInt(item.status) === 3" style="margin-top: 10px;font-size:13px">
                       已经完成
-                      <el-button size="mini" @click="download(item.folder_name)">下载</el-button>
                     </div>
                     <div v-else style="margin-top: 10px">未完成</div>
+                    <div style="margin-top: 50px">
+                      <el-button size="mini" slot="tip" class="el-upload__tip" @click="download(item.folder_name)">下载
+                      </el-button>
+                    </div>
                   </div>
                   <div v-else>
-                    <div>指定人:</div>
+                    <div style="font-size:13px">指定人:</div>
                     <div>
                       <el-select :disabled="!(parseInt(item.status) === 1)" v-model="item.user_id" placeholder="请选择">
                         <el-option
