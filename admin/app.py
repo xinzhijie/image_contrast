@@ -35,7 +35,7 @@ app.config.from_object(config)
 app.config['SECRET_KEY'] = 'I have a dream'
 address = 'C:\\Users\\Administrator\\Desktop\\images\\static\\'
 app.config['UPLOADED_PHOTOS_DEST'] = address
-app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024
 db = SQLAlchemy(app)
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
@@ -174,8 +174,8 @@ def delete_file(filename):
     return render_template('manage.html', files_list=files_list)
 
 
-@app.route('/download/<folder_name>', methods=['GET', 'POST'])
-def download(folder_name):
+@app.route('/download/<folder_name>/<filename>', methods=['GET', 'POST'])
+def download(folder_name, filename):
     folder_name = address + folder_name
     # filename = folder_name + "\\data.xlsx"
     # arr = []
@@ -190,7 +190,7 @@ def download(folder_name):
     # obj = AHP(M)
     # evec = obj.get_evec(obj.supp_mat(M))
     # obj.save_result(evec, folder_name)
-    return send_from_directory(folder_name, filename="result.xlsx", as_attachment=True)
+    return send_from_directory(folder_name, filename=filename, as_attachment=True)
 
 
 def getline(the_file_path, line_number):
@@ -237,11 +237,11 @@ def registry():
     if len(users) > 0:
         return jsonify({'status':'no','info':'%s注册失败'%username})
     else:
-        user = User(username=username, password=password)
+        user = User(username=username, password=password, role=1)
         # 调用添加方法
         db.session.add(user)
         db.session.commit()
-        return jsonify({'status':'ok','info':'%s注册成功'%username,'session':username,'role':users[0].role})
+        return jsonify({'status':'ok','info':'%s注册成功'%username,'session':username,'role':1})
 
 
 @app.route('/getTask', methods=['GET'])
