@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row>
+    <el-row style="margin-top: 2px">
       <el-col :span="3">
         <el-scrollbar wrap-class="scrollbar-wrapper">
           <el-menu
@@ -22,6 +22,10 @@
         </el-scrollbar>
       </el-col>
       <el-col :span="21">
+        <el-row style="height: 40px">
+          <span @click="loginOut()" style="line-height: 40px;float: right;margin-right: 10px;cursor:pointer">退出登录</span>
+        </el-row>
+        <hr>
         <router-view></router-view>
       </el-col>
     </el-row>
@@ -35,6 +39,9 @@ export default {
     }
   },
   methods: {
+    loginOut(){
+      this.$router.push({ path: 'login' })
+    },
     to (path) {
       this.$router.push({ path: path })
     },

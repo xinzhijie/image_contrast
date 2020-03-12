@@ -43,7 +43,7 @@
             <el-button :type="bt4" @click="check(-3)" round>略微弱于</el-button>
           </div>
           <div style="margin-top: 10px">
-            <el-button :type="bt5" @click="check(-5)" round>略微明显</el-button>
+            <el-button :type="bt5" @click="check(-5)" round>明显弱于</el-button>
           </div>
         </el-col>
         <el-col :span="10">

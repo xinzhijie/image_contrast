@@ -47,7 +47,7 @@
                   </el-upload>
                 </el-col>
                 <el-col :span="10">
-                  <div style="margin-top: 10px" v-if="parseInt(item.status) > 1">
+                  <div style="margin-top: 10px;height: 50px" v-if="parseInt(item.status) > 1">
                     <span style="font-size:13px" v-for="u in tableList[index].users">
                       <span v-if="u.id === item.user_id">指定用户:{{u.username}}</span>
                     </span>
@@ -55,12 +55,14 @@
                       已经完成
                     </div>
                     <div v-else style="margin-top: 10px; font-size:13px;">未完成</div>
-                    <div style="margin-top: 50px">
-                      <el-button size="mini" slot="tip" class="el-upload__tip" @click="download(item.folder_name)">下载
+                    <div v-if="parseInt(item.status) === 3" style="margin-top: 50px">
+                      <el-button size="mini" slot="tip" class="el-upload__tip" @click="download(item.folder_name)">标注下载
+                      </el-button>
+                      <el-button size="mini" slot="tip" class="el-upload__tip" @click="downloadResult(item.folder_name)">结果下载
                       </el-button>
                     </div>
                   </div>
-                  <div v-else>
+                  <div style="height: 50px" v-else>
                     <div style="font-size:13px">指定人:</div>
                     <div>
                       <el-select :disabled="!(parseInt(item.status) === 1)" v-model="item.user_id" placeholder="请选择">
@@ -111,8 +113,11 @@ export default {
         })
       })
     },
+    downloadResult (value) {
+      window.location.href = 'download/' + value + '/result.xlsx'
+    },
     download (value) {
-      window.location.href = 'download/' + value
+      window.location.href = 'download/' + value + '/data.xlsx'
     },
     over (item) {
       if (item.size > 1) {
@@ -231,7 +236,7 @@ export default {
     },
   },
   created () {
-    this.min = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 30
+    this.min = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 90
     this.getTask()
   }
 }

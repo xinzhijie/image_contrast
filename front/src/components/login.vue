@@ -80,19 +80,27 @@ export default {
         })
     },
     registry() {
-      const param = {'username': this.username_registry, 'password': this.password_registry}
-      this.$http
-        .post('registry', param)
-        .then(res => {
-          if (res.data.status === 'ok') {
-            this.$message('注册成功')
-          } else {
-            this.$message('注册失败有相同的用户名')
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      if (this.password_registry === this.password_review) {
+        const param = {'username': this.username_registry, 'password': this.password_registry}
+        this.$http
+          .post('registry', param)
+          .then(res => {
+            if (res.data.status === 'ok') {
+              this.$message('注册成功')
+              this.isUp = false
+              this.isIn = true
+              this.password_registry = ''
+              this.password_review = ''
+            } else {
+              this.$message('注册失败有相同的用户名')
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      } else {
+        this.$message('两次输入的密码不一致')
+      }
     }
   },
   created() {

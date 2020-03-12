@@ -37,7 +37,7 @@ export default {
   },
   methods: {},
   created () {
-    this.min = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 150
+    this.min = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 200
     this.axios
       .get('/getUsers')
       .then(res => {

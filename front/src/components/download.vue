@@ -28,7 +28,11 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleEdit(scope.$index, scope.row)">结果下载
+              @click="download(scope.$index, scope.row)">标注下载
+            </el-button>
+            <el-button
+              size="mini"
+              @click="downloadResult(scope.$index, scope.row)">结果下载
             </el-button>
           </template>
         </el-table-column>
@@ -58,8 +62,11 @@ export default {
     }
   },
   methods: {
-    handleEdit (index, row) {
-      window.location.href = 'download/' + row.folder_name
+    downloadResult (index, row) {
+      window.location.href = 'download/' + row.folder_name + '/result.xlsx'
+    },
+    download (index, row) {
+      window.location.href = 'download/' + row.folder_name + '/data.xlsx'
     },
     handleDelete (index, row) {
       console.log(index, row)
