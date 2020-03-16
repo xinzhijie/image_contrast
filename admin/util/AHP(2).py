@@ -4,7 +4,6 @@
 import numpy as np
 import os
 import openpyxl
-import xlrd
 
 
 class AHP():
@@ -30,7 +29,8 @@ class AHP():
         index = list(eval).index(max_eval)
         cor_evec = evec[:, index]
         cor_evec_mod = [abs(a) for a in cor_evec]
-        return self.normalization_vec(cor_evec_mod)
+
+        return cor_evec_mod
 
     #Normalize the vector to the[0, 10] interval
     def normalization_vec(self, vec):
@@ -39,37 +39,31 @@ class AHP():
         return ['%.2f' %v for v in nor_vec]
 
     #Save data to exel file
-    def save_result(self, data, folder):
-        file_path = os.path.abspath(folder + '\\result.xlsx')
+    def save_result(self, data):
+        file_path = os.path.abspath('./result.xlsx')
         if os.path.exists(file_path):         #Judge if the excel file exists
-            os.remove(file_path)
-            print('The result file exists in the current path, please check.')
-        wb = openpyxl.Workbook()
-        ws1 = wb.active
-        ws1['A1'] = 'Data'
-        ws1['B1'] = 'Score'
-        for row in range(2,len(data)+2):
-            ws1[row][0].value = row - 1
-            ws1[row][1].value = str(data[row-2])
-        wb.save(folder + '//result.xlsx')
-        print('The result is already saved under the path', file_path)
+           print('The result file exists in the current path, please check.')
+           return
+        else:
+            wb = openpyxl.Workbook()
+            ws1 = wb.active
+            ws1['A1'] = 'Data'
+            ws1['B1'] = 'Score'
+            for row in range(2,len(data)+2):
+                ws1[row][0].value = row - 1
+                ws1[row][1].value = str(data[row-2])
+            wb.save('result.xlsx')
+            print('The result is already saved under the path', file_path)
 
 
 if __name__ == '__main__':
-
-    filename = "data.xlsx"
-    arr = []
-    ex = xlrd.open_workbook(filename).sheets()[0]
-    for i in range(ex.nrows):
-        print(i)
-        col = ex.row_values(i)
-        for index, n in enumerate(col):
-            if isinstance(n, str):
-                col[index] = 0
-        arr.append(col)
-    M = np.array(arr)
+    M = np.array([[1,3,3,5,5,3,5,3,5,5],[0,1,3,5,5,3,5,3,5,5],[0,0,1,3,3,5,5,3,3,5],[0,0,0,1,1,1,3,5,3,5],[0,0,0,0,1,1,3,3,5,5], [0,0,0,0,0,1,3,3,5,5], [0,0,0,0,0,0,1,3,3,5], [0,0,0,0,0,0,0,1,3,5],[0,0,0,0,0,0,0,0,1,3],[0,0,0,0,0 ,0,0,0,0,1]])
     obj = AHP(M)
+    # print(obj.supp_mat(M))
     evec = obj.get_evec(obj.supp_mat(M))
-    obj.save_result(evec)
+    print(obj.normalization_vec(evec))
+    # print(evec)
 
+    # obj.save_result(obj.normalization_vec(evec))
+#
 

@@ -59,7 +59,7 @@ def upload_file():
     folder = address + folder_name
     tasks = Task.query.filter_by(folder_name=folder_name).all()
     if len(tasks) == 0:
-        task = Task(folder_name=folder_name, size=len(request.files.getlist('photo')), status='0', create_time=datetime.now())
+        task = Task(folder_name=folder_name, size=len(request.files.getlist('photo')), status='0', place='1-2', create_time=datetime.now())
         # 调用添加方法
         db.session.add(task)
         db.session.commit()
@@ -136,8 +136,12 @@ def submit():
 
 @app.route('/update_excel/<row>/<line>/<value>', methods=['GET', 'POST'])
 def update_excel(row, line, value):
+
     user_id = request.headers.get('Authorization', None)
     task = Task.query.filter_by(user_id=user_id, status=2).first()
+    task.place = str(row) + '-' + str(line)
+    db.session.commit()
+
     folder_name = address + task.folder_name
     row = int(row) - 1
     line = int(line) - 1
@@ -191,6 +195,13 @@ def download(folder_name, filename):
     # evec = obj.get_evec(obj.supp_mat(M))
     # obj.save_result(evec, folder_name)
     return send_from_directory(folder_name, filename=filename, as_attachment=True)
+
+
+@app.route('/getTaskBean', methods=['GET'])
+def get_task_bean():
+    user_id = request.headers.get('Authorization', None)
+    task = Task.query.filter_by(user_id=user_id, status=2).first()
+    return jsonify(task)
 
 
 def getline(the_file_path, line_number):
@@ -309,10 +320,11 @@ class Task(db.Model):
     folder_name = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(100), nullable=False)
     size = db.Column(db.String(100), nullable=False)
+    place = db.Column(db.String(100), nullable=False)
     create_time = db.Column(db.DateTime, nullable=False)  # 发送时间
 
     def keys(self):
-        return ['id', 'user_id', 'folder_name', 'status', 'size', 'create_time']
+        return ['id', 'user_id', 'folder_name', 'status', 'size', 'place', 'create_time']
 
     def __getitem__(self, item):
         return getattr(self, item)

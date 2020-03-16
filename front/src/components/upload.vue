@@ -52,20 +52,24 @@
                       <span v-if="u.id === item.user_id">指定用户:{{u.username}}</span>
                     </span>
                     <div  v-if="parseInt(item.status) === 3" style="margin-top: 10px;font-size:13px">
-                      已经完成
+                      已经完成标注
                     </div>
                     <div v-else style="margin-top: 10px; font-size:13px;">未完成</div>
-                    <div v-if="parseInt(item.status) === 3" style="margin-top: 50px">
-                      <el-button size="mini" slot="tip" class="el-upload__tip" @click="download(item.folder_name)">标注下载
-                      </el-button>
-                      <el-button size="mini" slot="tip" class="el-upload__tip" @click="downloadResult(item.folder_name)">结果下载
-                      </el-button>
+                    <div v-if="parseInt(item.status) === 3" style="margin-top: 10px;">
+                      <div>
+                        <el-button size="mini" slot="tip" class="el-upload__tip" @click="download(item.folder_name)">标注下载
+                        </el-button>
+                      </div>
+                      <div style="margin-top: 5px;">
+                        <el-button size="mini" slot="tip" class="el-upload__tip" @click="downloadResult(item.folder_name)">结果下载
+                        </el-button>
+                      </div>
                     </div>
                   </div>
-                  <div style="height: 50px" v-else>
+                  <div style="height: 60px" v-else>
                     <div style="font-size:13px">指定人:</div>
-                    <div>
-                      <el-select :disabled="!(parseInt(item.status) === 1)" v-model="item.user_id" placeholder="请选择">
+                    <div style="margin-top: 10px">
+                      <el-select size="mini" :disabled="!(parseInt(item.status) === 1)" v-model="item.user_id" placeholder="请选择">
                         <el-option
                           v-for="u in users"
                           :key="u.id"
@@ -140,7 +144,7 @@ export default {
     complete (item) {
       if (item.user_id === null || item.user_id === '') {
         this.$message({
-          message: '清选择正确的人',
+          message: '请选择正确的人',
           type: 'success'
         })
       } else {

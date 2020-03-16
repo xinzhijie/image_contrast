@@ -26,7 +26,8 @@
       <el-row style="margin-top: 80px">
         <el-col :span="10">
           <div style="text-align:center">
-            <img class="exam" style="width: 300px;height: 300px" :src="image1"/>
+            <div>第{{arr[0]}}张</div>
+            <div style="margin-top: 10px"><img class="exam" style="width: 300px;height: 300px" :src="image1"/></div>
           </div>
         </el-col>
         <el-col style="text-align:center" :span="4">
@@ -48,15 +49,18 @@
         </el-col>
         <el-col :span="10">
           <div style="text-align:center">
-            <img class="exam" style="width: 300px;height: 300px" :src="image2"/>
+            <div>第{{arr[1]}}张</div>
+            <div style="margin-top: 10px">
+              <img class="exam" style="width: 300px;height: 300px" :src="image2"/>
+            </div>
           </div>
         </el-col>
       </el-row>
       <el-row>
         <div style="margin-top: 10px;text-align: center">
           <el-button @click="previous()">上一个</el-button>
-          <el-button @click="next()">下一个</el-button>
-          <el-button @click="submit()">提交</el-button>
+          <el-button v-if="parseInt(size) - 1 === arr[0] && parseInt(size) === arr[1]" @click="submit()">提交</el-button>
+          <el-button v-else @click="next()">下一个</el-button>
         </div>
       </el-row>
     </div>
@@ -96,6 +100,15 @@ export default {
       this.axios
         .get('/getTask')
         .then(res => {
+          this.axios
+            .get('/getTaskBean')
+            .then(res => {
+              this.arr[0] = parseInt(res.data.place.split('-')[0])
+              this.arr[1] = parseInt(res.data.place.split('-')[1])
+              this.getValue(this.arr)
+              this.getImage(this.arr[0], '1')
+              this.getImage(this.arr[1], '2')
+            })
           this.info = res.data.filter(item => {
             if (item.user_id === sessionStorage.getItem('accessToken') && parseInt(item.status) === 2) {
               return true
@@ -233,7 +246,7 @@ export default {
           this.$message('已经是最后一个')
         }
       } else {
-        this.$message('请先选择')
+        this.$message('请先进行标注')
       }
     },
     getValue (arr) {
@@ -308,9 +321,6 @@ export default {
     this.getTask()
     this.min = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 34
     this.getSize()
-    this.getValue(this.arr)
-    this.getImage(this.arr[0], '1')
-    this.getImage(this.arr[1], '2')
   }
 }
 </script>
